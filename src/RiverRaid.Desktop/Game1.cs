@@ -9,14 +9,31 @@ namespace RiverRaid.Desktop
 {
     public class Game1 : Game
     {
-        private GraphicsDeviceManager graphics;
+        private readonly SpriteSheet plane;
+
         private SpriteBatch spriteBatch;
+
+        // The position of the plane
+        private int planeX;
+        private int planeY;
+
+        // TODO - remove this, and the ball resource
+        private Texture2D ballTexture;
+
 
         public Game1()
         {
-            graphics = new GraphicsDeviceManager(this);
+            var graphics = new GraphicsDeviceManager(this);
+            graphics.PreferredBackBufferWidth = Globals.Width;
+            graphics.PreferredBackBufferHeight = Globals.Height;
+
             Content.RootDirectory = "Content";
             IsMouseVisible = true;
+
+            plane = new SpriteSheet("fighter", 49, 70, 1, 3);
+
+            planeX = Globals.Width / 2 - (plane.TileWidth / 2);
+            planeY = Globals.Height - plane.TileHeight * 3 / 2;
         }
 
 
@@ -32,7 +49,9 @@ namespace RiverRaid.Desktop
         {
             spriteBatch = new SpriteBatch(GraphicsDevice);
 
-            // TODO: use this.Content to load your game content here
+            plane.Load(Content);
+
+            ballTexture = Content.Load<Texture2D>("ball");
         }
 
 
@@ -43,7 +62,17 @@ namespace RiverRaid.Desktop
                 Exit();
             }
 
-            // TODO: Add your update logic here
+            if (Keyboard.GetState().IsKeyDown(Keys.A) && planeX > 0)
+            {
+                // TODO - need a "speed" variable; also need to take gameTime into account!
+                planeX -= 2;
+            }
+
+            if (Keyboard.GetState().IsKeyDown(Keys.D) && planeX < Globals.Width - plane.TileWidth)
+            {
+                // TODO - need a "speed" variable; also need to take gameTime into account!
+                planeX += 2;
+            }
 
             base.Update(gameTime);
         }
@@ -54,6 +83,12 @@ namespace RiverRaid.Desktop
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
             // TODO: Add your drawing code here
+            spriteBatch.Begin();
+            spriteBatch.Draw(ballTexture, new Vector2(0, 0), Color.White);
+
+            plane.Draw(spriteBatch, 0, 1, planeX, planeY);
+
+            spriteBatch.End();
 
             base.Draw(gameTime);
         }

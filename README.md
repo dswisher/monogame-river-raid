@@ -2,6 +2,8 @@
 
 This is mainly a learning experience for me, to improve my understanding of the Monogame framework.
 I am loosely following the [20 game challenge](https://20_games_challenge.gitlab.io/challenge/).
+The page for [River Raid](https://20_games_challenge.gitlab.io/games/river_raid/) has a short list of requirements as a guide.
+There is also a [wikipedia](https://en.wikipedia.org/wiki/River_Raid) page for the game.
 
 
 # Hacks for M1 Mac
@@ -26,4 +28,9 @@ The game will now run from within Rider.
 It does not run from the command-line, unless you do a `dotnet clean` first.
 
 For a little more info, see [this issue](https://github.com/MonoGame/MonoGame/issues/3556#issuecomment-1762816496).
+
+
+# Art Credits
+
+* [Allied Fighter Sprites](https://www.deviantart.com/prinzeugn/art/Allied-Fighter-Sprites-66532109) by [PrinzEugn](https://www.deviantart.com/prinzeugn)
 
