@@ -26,12 +26,12 @@ namespace RiverRaid.Desktop
         public int TileHeight { get; }
 
 
-        public void Load(ContentManager content)
+        public void LoadContent(ContentManager content)
         {
             texture = content.Load<Texture2D>(contentName);
         }
 
-        public void Draw(SpriteBatch spriteBatch, int row, int col, int x, int y)
+        public void Draw(SpriteBatch spriteBatch, int row, int col, float x, float y)
         {
             // TODO - precompute the source rectangles for each sprite?
             var sourceRect = new Rectangle(col * TileWidth, row * TileHeight, TileWidth, TileHeight);
