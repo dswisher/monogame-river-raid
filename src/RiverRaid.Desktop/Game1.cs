@@ -10,6 +10,7 @@ namespace RiverRaid.Desktop
     public class Game1 : Game
     {
         private readonly Plane plane;
+        private readonly River river;
 
         private SpriteBatch spriteBatch;
 
@@ -21,6 +22,7 @@ namespace RiverRaid.Desktop
             graphics.PreferredBackBufferHeight = Globals.Height;
 
             plane = new Plane();
+            river = new River();
 
             Content.RootDirectory = "Content";
             IsMouseVisible = true;
@@ -39,6 +41,7 @@ namespace RiverRaid.Desktop
         {
             spriteBatch = new SpriteBatch(GraphicsDevice);
 
+            river.LoadContent(Content);
             plane.LoadContent(Content);
         }
 
@@ -50,6 +53,7 @@ namespace RiverRaid.Desktop
                 Exit();
             }
 
+            river.Update(gameTime);
             plane.Update(gameTime);
 
             base.Update(gameTime);
@@ -58,10 +62,11 @@ namespace RiverRaid.Desktop
 
         protected override void Draw(GameTime gameTime)
         {
-            GraphicsDevice.Clear(Color.CornflowerBlue);
+            GraphicsDevice.Clear(Color.Black);
 
             spriteBatch.Begin();
 
+            river.Draw(spriteBatch);
             plane.Draw(spriteBatch);
 
             spriteBatch.End();

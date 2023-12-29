@@ -10,7 +10,8 @@
 
     <PropertyGroup>
         <!-- TODO - HACK for M1 Macs - need to make this conditional on the host/OS! -->
-        <DotnetCommand Condition="'$(DotnetCommand)' == ''">/usr/local/share/dotnet/x64/dotnet</DotnetCommand>
+        <!-- <DotnetCommand Condition="'$(DotnetCommand)' == ''">/usr/local/share/dotnet/x64/dotnet</DotnetCommand> -->
+        <DotnetCommand>/usr/local/share/dotnet/x64/dotnet</DotnetCommand>
     </PropertyGroup>
 
     <PropertyGroup>

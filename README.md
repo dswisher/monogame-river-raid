@@ -31,11 +31,23 @@ It does not run from the command-line, unless you do a `dotnet clean` first.
 
 For a little more info, see [this issue](https://github.com/MonoGame/MonoGame/issues/3556#issuecomment-1762816496).
 
-This as causing multiple issues: slow builds, and failures with Rosetta emulation.
+This was causing multiple issues: slow builds, and failures with Rosetta emulation.
 So, I switched back to the "normal" dotnet (I deleted the `.user` file) and added a line to the `.csproj` file to force the content pipeline to use x64 instead of amd64.
+
+
+# TODO List
+
+* Try using [Nopipeline](https://github.com/Martenfur/Nopipeline), which eliminates the need to use the mgcb GUI.
 
 
 # Art Credits
 
 * [Allied Fighter Sprites](https://www.deviantart.com/prinzeugn/art/Allied-Fighter-Sprites-66532109) by [PrinzEugn](https://www.deviantart.com/prinzeugn)
+
+
+# Game Links
+
+* The 20-Game Challenge [River Raid Page](https://20_games_challenge.gitlab.io/games/river_raid/)
+* The Wikipedia [River Raid Page](https://en.wikipedia.org/wiki/River_Raid)
+* Moby Games [River Raid Page](https://www.mobygames.com/game/6947/river-raid/screenshots/atari-5200/56802/)
 

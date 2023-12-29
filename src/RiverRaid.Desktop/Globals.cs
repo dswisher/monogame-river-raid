@@ -5,7 +5,7 @@ namespace RiverRaid.Desktop
 {
     public static class Globals
     {
-        public const int Width = 600;
+        public const int Width = 640;
         public const int Height = 800;
     }
 }

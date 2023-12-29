@@ -10,12 +10,15 @@ namespace RiverRaid.Desktop
     public class SpriteSheet
     {
         private readonly string contentName;
+        private readonly int borderWidth;
         private Texture2D texture;
 
+
         // TODO - save the rows and cols, and use to validate .Draw call parameters
-        public SpriteSheet(string contentName, int tileWidth, int tileHeight, int tileRows, int tileCols)
+        public SpriteSheet(string contentName, int tileWidth, int tileHeight, int tileRows, int tileCols, int borderWidth = 0)
         {
             this.contentName = contentName;
+            this.borderWidth = borderWidth;
 
             TileWidth = tileWidth;
             TileHeight = tileHeight;
@@ -34,7 +37,7 @@ namespace RiverRaid.Desktop
         public void Draw(SpriteBatch spriteBatch, int row, int col, float x, float y)
         {
             // TODO - precompute the source rectangles for each sprite?
-            var sourceRect = new Rectangle(col * TileWidth, row * TileHeight, TileWidth, TileHeight);
+            var sourceRect = new Rectangle(borderWidth + col * (TileWidth + borderWidth), borderWidth + row * (TileHeight + borderWidth), TileWidth, TileHeight);
 
             spriteBatch.Draw(texture, new Vector2(x, y), sourceRect, Color.White);
         }
