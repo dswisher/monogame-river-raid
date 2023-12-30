@@ -4,13 +4,16 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using RiverRaid.Desktop.Levels;
 
 namespace RiverRaid.Desktop
 {
     public class Game1 : Game
     {
         private readonly Plane plane;
-        private readonly River river;
+        private readonly LevelManager levelManager;
+
+        private readonly ILevelCreator levelCreator;
 
         private SpriteBatch spriteBatch;
 
@@ -22,7 +25,9 @@ namespace RiverRaid.Desktop
             graphics.PreferredBackBufferHeight = Globals.Height;
 
             plane = new Plane();
-            river = new River();
+
+            levelCreator = new SimpleLevelCreator();
+            levelManager = new LevelManager(levelCreator);
 
             Content.RootDirectory = "Content";
             IsMouseVisible = true;
@@ -41,7 +46,7 @@ namespace RiverRaid.Desktop
         {
             spriteBatch = new SpriteBatch(GraphicsDevice);
 
-            river.LoadContent(Content);
+            levelCreator.LoadContent(Content);
             plane.LoadContent(Content);
         }
 
@@ -53,7 +58,7 @@ namespace RiverRaid.Desktop
                 Exit();
             }
 
-            river.Update(gameTime);
+            levelManager.Update(gameTime);
             plane.Update(gameTime);
 
             base.Update(gameTime);
@@ -64,9 +69,10 @@ namespace RiverRaid.Desktop
         {
             GraphicsDevice.Clear(Color.Black);
 
+            // TODO - move spriteBatch to Globals
             spriteBatch.Begin();
 
-            river.Draw(spriteBatch);
+            levelManager.Draw(spriteBatch);
             plane.Draw(spriteBatch);
 
             spriteBatch.End();

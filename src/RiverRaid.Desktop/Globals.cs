@@ -7,5 +7,10 @@ namespace RiverRaid.Desktop
     {
         public const int Width = 640;
         public const int Height = 800;
+
+        public const int CellSize = 16;
+
+        public const int ScreenRowHeight = Height / CellSize;
+        public const int ScreenColumnWidth = Width / CellSize;
     }
 }
