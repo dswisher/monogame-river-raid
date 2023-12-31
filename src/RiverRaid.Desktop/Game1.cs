@@ -24,10 +24,11 @@ namespace RiverRaid.Desktop
             graphics.PreferredBackBufferWidth = Globals.Width;
             graphics.PreferredBackBufferHeight = Globals.Height;
 
-            plane = new Plane();
-
             levelCreator = new SimpleLevelCreator();
             levelManager = new LevelManager(levelCreator);
+
+            plane = new Plane();
+            plane.AddVelocityCallback(x => levelManager.Velocity = x);
 
             Content.RootDirectory = "Content";
             IsMouseVisible = true;

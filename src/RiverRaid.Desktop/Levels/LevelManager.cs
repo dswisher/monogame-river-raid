@@ -12,6 +12,8 @@ namespace RiverRaid.Desktop.Levels
         private Level nextLevel;
         private Level currentLevel;
 
+        private float top;
+
 
         public LevelManager(ILevelCreator levelCreator)
         {
@@ -19,29 +21,40 @@ namespace RiverRaid.Desktop.Levels
 
             currentLevel = levelCreator.Create(null);
             nextLevel = levelCreator.Create(currentLevel);
+
+            top = Globals.Height - currentLevel.Height;
         }
 
 
         /// <summary>
         /// Gets or sets the upward velocity of the plane (downward velocity of the terrain).
         /// </summary>
-        public float Velocity { get; set; }
+        public float Velocity { get; set; } = 100f;
 
 
         public void Update(GameTime gameTime)
         {
             // TODO - update the river (scroll down), possibly creating a new level
             // TODO - spawn any enemies that are now visible (delegate to levels?)
+
+            top += Velocity * (float)gameTime.ElapsedGameTime.TotalSeconds;
+
+            if (top > currentLevel.Height)
+            {
+                top -= currentLevel.Height;
+
+                currentLevel = nextLevel;
+                nextLevel = levelCreator.Create(currentLevel);
+            }
         }
 
 
         public void Draw(SpriteBatch spriteBatch)
         {
-            // TODO - draw the visible levels
-            var fromRow = currentLevel.Rows - Globals.ScreenRowHeight;
-            var toRow = currentLevel.Rows - 1;
+            // TODO - only draw the visible rows
 
-            currentLevel.Draw(spriteBatch, fromRow, toRow, 0);
+            currentLevel.Draw(spriteBatch, 0, currentLevel.Rows - 1, top);
+            nextLevel.Draw(spriteBatch, 0, nextLevel.Rows - 1, top - nextLevel.Height);
         }
     }
 }

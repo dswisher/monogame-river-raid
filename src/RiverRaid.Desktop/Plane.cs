@@ -1,6 +1,8 @@
 // Copyright (c) Doug Swisher. All Rights Reserved.
 // Licensed under the MIT License. See LICENSE in the project root for license information.
 
+using System;
+using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
@@ -10,15 +12,16 @@ namespace RiverRaid.Desktop
 {
     public class Plane
     {
-        private const float MaxSpeed = 500f;
-        private const float MinSpeed = 100f;
+        private const float MaxVelocity = 500f;
+        private const float MinVelocity = 150f;
 
         private readonly SpriteSheet spriteSheet;
+        private readonly List<Action<float>> velocityChangedCallbacks = new ();
 
-        private float speed = (MinSpeed + MaxSpeed) / 2f;
+        private float velocity = (MinVelocity + MaxVelocity) / 2f;
 
-        private float deltaX = 500f;
-        private float deltaY = 200f;
+        private float deltaX = 300f;
+        private float deltaY = 400f;
 
         private int spriteCol = 1;
         private Vector2 pos;
@@ -33,6 +36,12 @@ namespace RiverRaid.Desktop
         }
 
 
+        public void AddVelocityCallback(Action<float> callback)
+        {
+            velocityChangedCallbacks.Add(callback);
+        }
+
+
         public void LoadContent(ContentManager content)
         {
             spriteSheet.LoadContent(content);
@@ -41,17 +50,17 @@ namespace RiverRaid.Desktop
 
         public void Update(GameTime gameTime)
         {
-            if (Keyboard.GetState().IsKeyDown(Keys.W) && speed < MaxSpeed)
+            if (Keyboard.GetState().IsKeyDown(Keys.W) && velocity < MaxVelocity)
             {
-                speed += deltaY * (float)gameTime.ElapsedGameTime.TotalSeconds;
+                velocity += deltaY * (float)gameTime.ElapsedGameTime.TotalSeconds;
 
-                // TODO - fire off an event
+                OnVelocityChanged();
             }
-            else if (Keyboard.GetState().IsKeyDown(Keys.S) && speed > MinSpeed)
+            else if (Keyboard.GetState().IsKeyDown(Keys.S) && velocity > MinVelocity)
             {
-                speed -= deltaY * (float)gameTime.ElapsedGameTime.TotalSeconds;
+                velocity -= deltaY * (float)gameTime.ElapsedGameTime.TotalSeconds;
 
-                // TODO - fire off an event
+                OnVelocityChanged();
             }
 
             if (Keyboard.GetState().IsKeyDown(Keys.A) && pos.X > 0)
@@ -74,6 +83,15 @@ namespace RiverRaid.Desktop
         public void Draw(SpriteBatch spriteBatch)
         {
             spriteSheet.Draw(spriteBatch, 0, spriteCol, pos.X, pos.Y);
+        }
+
+
+        private void OnVelocityChanged()
+        {
+            foreach (var cb in velocityChangedCallbacks)
+            {
+                cb(velocity);
+            }
         }
     }
 }

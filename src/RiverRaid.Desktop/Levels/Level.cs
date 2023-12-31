@@ -29,6 +29,9 @@ namespace RiverRaid.Desktop.Levels
 
 
         public int Rows { get; }
+        public int Height => Rows * Globals.CellSize;
+        public int BridgeLeft { get; set; }
+        public int BridgeRight { get; set; }
 
 
         public void SetSprite(int row, int col, int spriteRow, int spriteCol)
@@ -46,7 +49,7 @@ namespace RiverRaid.Desktop.Levels
                 {
                     var cell = cells[row, col];
 
-                    spriteSheet.Draw(spriteBatch, cell.SpriteRow, cell.SpriteCol, col * 16, row * 16 + top);
+                    spriteSheet.Draw(spriteBatch, cell.SpriteRow, cell.SpriteCol, col * 16, (int)(row * 16 + top));
                 }
             }
         }
