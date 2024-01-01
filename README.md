@@ -40,9 +40,11 @@ So, I switched back to the "normal" dotnet (I deleted the `.user` file) and adde
 * Try using [Nopipeline](https://github.com/Martenfur/Nopipeline), which eliminates the need to use the mgcb GUI.
 
 
-# Art Credits
+# Art and Sound Credits
 
 * [Allied Fighter Sprites](https://www.deviantart.com/prinzeugn/art/Allied-Fighter-Sprites-66532109) by [PrinzEugn](https://www.deviantart.com/prinzeugn)
+* [Explosion Sprites](https://opengameart.org/content/explosion-32x32) by [Revon](https://opengameart.org/users/revon)
+* [Explosion Sound](https://www.freesoundeffects.com/free-sounds/explosion-10070/)
 
 
 # Game Links

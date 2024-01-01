@@ -24,16 +24,19 @@ namespace RiverRaid.Desktop
         private float deltaY = 400f;
 
         private int spriteCol = 1;
-        private Vector2 pos;
+        private Vector2 upperLeftCorner;
 
 
         public Plane()
         {
             spriteSheet = new SpriteSheet("fighter", 49, 70, 1, 3);
 
-            pos.X = Globals.Width / 2f - (spriteSheet.TileWidth / 2f);
-            pos.Y = Globals.Height - spriteSheet.TileHeight * 3f / 2;
+            upperLeftCorner.X = Globals.Width / 2f - (spriteSheet.TileWidth / 2f);
+            upperLeftCorner.Y = Globals.Height - spriteSheet.TileHeight * 3f / 2;
         }
+
+
+        public Vector2 Center => new(upperLeftCorner.X + spriteSheet.TileWidth / 2f, upperLeftCorner.Y + spriteSheet.TileHeight / 2f);
 
 
         public void AddVelocityCallback(Action<float> callback)
@@ -63,14 +66,14 @@ namespace RiverRaid.Desktop
                 OnVelocityChanged();
             }
 
-            if (Keyboard.GetState().IsKeyDown(Keys.A) && pos.X > 0)
+            if (Keyboard.GetState().IsKeyDown(Keys.A) && upperLeftCorner.X > 0)
             {
-                pos.X -= deltaX * (float)gameTime.ElapsedGameTime.TotalSeconds;
+                upperLeftCorner.X -= deltaX * (float)gameTime.ElapsedGameTime.TotalSeconds;
                 spriteCol = 0;
             }
-            else if (Keyboard.GetState().IsKeyDown(Keys.D) && pos.X < Globals.Width - spriteSheet.TileWidth)
+            else if (Keyboard.GetState().IsKeyDown(Keys.D) && upperLeftCorner.X < Globals.Width - spriteSheet.TileWidth)
             {
-                pos.X += deltaX * (float)gameTime.ElapsedGameTime.TotalSeconds;
+                upperLeftCorner.X += deltaX * (float)gameTime.ElapsedGameTime.TotalSeconds;
                 spriteCol = 2;
             }
             else
@@ -82,7 +85,7 @@ namespace RiverRaid.Desktop
 
         public void Draw(SpriteBatch spriteBatch)
         {
-            spriteSheet.Draw(spriteBatch, 0, spriteCol, pos.X, pos.Y);
+            spriteSheet.Draw(spriteBatch, 0, spriteCol, upperLeftCorner.X, upperLeftCorner.Y);
         }
 
 
